@@ -1,92 +1,131 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
       fixed
       app
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
+      <v-list dense>
+        <menu-item 
+        v-for="(item, i) in items"
+        :key="i"
+        v-bind:item="item" />
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <img src="logo.svg" alt="Cevi Jungschar Buchs-Rohr Aarau" height="64" width="320" />
     </v-app-bar>
     <v-content>
-      <v-container>
+      <v-container style="max-width: 976px;">
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <v-footer fixed app>
+      <span>&copy; {{ new Date().getFullYear() }} Cevi Jungschar Buchs-Rohr Aarau</span>
     </v-footer>
   </v-app>
 </template>
 
+<style>
+h1 {
+    font-size: 3rem;
+    margin-top: 2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 1.2rem;
+}
+</style>
+
 <script>
+import MenuItem from '~/components/MenuItem.vue'
 export default {
+  components: {
+    MenuItem
+  },
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
+      drawer: true,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
+          icon: 'mdi-home',
+          title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'Interessierte',
+          to: '/interessierte',
+          subitems: [
+            {
+              icon: 'mdi-door',
+              title: 'Schnuppern',
+              to: '/interessierte/schnuppern'
+            },
+            {
+              icon: 'mdi-walk',
+              title: 'Aktvitäten',
+              to: '/interessierte/aktivitaeten'
+            },
+            {
+              icon: 'mdi-city',
+              title: 'Cevi Schweiz',
+              to: '/interessierte/cevi_schweiz'
+            },
+            {
+              icon: 'mdi-map',
+              title: 'Standort',
+              to: '/interessierte/standort'
+            },
+          ]
+        },
+        {
+          title: 'Mitglieder',
+          to: '/mitglieder',
+          subitems: [
+            {
+              icon: 'mdi-calendar',
+              title: 'Agenda',
+              to: '/mitglieder/agenda'
+            },
+            {
+              icon: 'mdi-image',
+              title: 'Album',
+              to: '/mitglieder/album'
+            },
+            {
+              icon: 'mdi-basket',
+              title: 'Lädeli',
+              to: '/mitglieder/laedeli'
+            },
+            {
+              icon: 'mdi-human-male-boy',
+              title: 'Ausbildung',
+              to: '/mitglieder/ausbildung'
+            },
+            {
+              icon: 'mdi-account-group',
+              title: 'Leiterteam',
+              to: '/mitglieder/leiterteam'
+            },
+          ]
+        },
+        {
+          icon: 'mdi-comment-text',
+          title: 'Kontakt',
+          to: '/kontakt'
         }
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
     }
   }
 }
