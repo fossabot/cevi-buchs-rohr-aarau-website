@@ -1,4 +1,6 @@
 # cevi-buro-aarau-website
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpatrickuhlmann%2Fcevi-buchs-rohr-aarau-website.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpatrickuhlmann%2Fcevi-buchs-rohr-aarau-website?ref=badge_shield)
+
 
 > Webseite der Cevi Jungschar Buchs-Rohr Aarau
 
@@ -20,3 +22,7 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fpatrickuhlmann%2Fcevi-buchs-rohr-aarau-website.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fpatrickuhlmann%2Fcevi-buchs-rohr-aarau-website?ref=badge_large)
