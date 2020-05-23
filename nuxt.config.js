@@ -6,8 +6,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    title: 'Cevi Buchs-Rohr Aarau',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -15,7 +14,10 @@ export default {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
-      }
+      },
+      { 'http-equiv': 'pragma', content: 'no-cache' },
+      { 'http-equiv': 'cache-control', content: 'no-cache' },
+      { 'http-equiv': 'expires', content: '0' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }]
   },
@@ -47,8 +49,16 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/sentry',
+    ['nuxt-matomo', { matomoUrl: '//piwik.uhlme.ch/', siteId: 16 }],
   ],
+
+  sentry: {
+    dsn: 'https://c8be78aede154a729e2190299e2588bc@o391315.ingest.sentry.io/5237271',
+    config: {},
+  },
+
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

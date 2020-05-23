@@ -138,19 +138,28 @@
             :outlined=true
             ></v-textarea>
 
-            <v-alert v-if="result == 'sent'" type="success">
-                Die Anmeldung wurde erfolgreich übermittelt. Wir werden in Kürze mit Ihnen in Kontakt treten.
-            </v-alert>
-
-            <v-alert v-if="result == 'fail'" type="error">
-                Fehler bei der Übermittlung. Bitte versuchen Sie es später noch einmal.
-            </v-alert>
+            <v-snackbar
+                v-model="showMessage"
+                :bottom=true
+                :color="messageColor"
+                :timeout=3000
+                :vertical=true>
+                {{ messageText }}
+                <v-btn
+                    dark
+                    text
+                    @click="snackbar = false">
+                    Schliessen
+                </v-btn>
+            </v-snackbar>
 
             <v-btn class="mr-4" color="primary" @click="submit">Anmelden</v-btn>
         </v-form>
     </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
@@ -160,7 +169,6 @@ export default {
             birthdate: '',
             visitdate: '',
             remarks: '',
-            result: '',
             nameRules: [
                 v => !!v || 'Name ist ein Pflichtfeld'
             ],
@@ -170,6 +178,9 @@ export default {
             ],
             showVisitPicker: false,
             showBirthDatePicker: false,
+            showMessage: false,
+            messageText: '',
+            messageColor: 'green'
         }
     },
     watch: {
@@ -179,7 +190,45 @@ export default {
     },
     methods: {
         submit() {
-            this.result = 'fail'
+            if (!this.name) {
+                this.messageText = 'Bitte geben Sie einen Namen ein';
+                this.messageColor = 'red';
+                this.showMessage = 'true'
+                return;
+            } else if (!this.email || !/.+@.+/.test(this.email)) {
+                this.messageText = 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
+                this.messageColor = 'red';
+                this.showMessage = 'true'
+                return
+            }
+
+            const instance = axios.create({
+                baseURL: 'https://backend.cevi-buro-aarau.ch/api',
+                timeout: 10000,
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            instance.post('/forms/submit/Schnuppern?token=486f18ebe895de87c4f35c58d3db0f', 
+                    {
+                        name: this.name,
+                        email: this.email,
+                        phone: this.phone,
+                        birthdate: this.birthdate,
+                        visitdate: this.visitdate,
+                        remarks: this.remarks,
+                    })
+            .then(res => {
+                this.messageText = 'Die Anmeldung wurde erfolgreich übermittelt. Wir werden in Kürze mit Ihnen in Kontakt treten.';
+                this.messageColor = 'green';
+                this.showMessage = 'true';
+            })
+            .catch (err => {
+                console.log(err);
+                this.$sentry.captureException(err);
+                this.messageText = 'Fehler bei der Übermittlung. Bitte versuchen Sie es später noch einmal.';
+                this.messageColor = 'red';
+                this.showMessage = 'true';
+            })
         },
         allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
         save (date) {
