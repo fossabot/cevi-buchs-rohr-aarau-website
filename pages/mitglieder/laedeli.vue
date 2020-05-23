@@ -1,3 +1,3 @@
 <template>
-<p>Lädeli</p>
+  <p>Lädeli</p>
 </template>

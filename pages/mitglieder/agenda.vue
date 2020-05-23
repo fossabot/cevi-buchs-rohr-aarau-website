@@ -1,3 +1,3 @@
 <template>
-<h1>Agenda</h1>
+  <h1>Agenda</h1>
 </template>

@@ -1,3 +1,3 @@
 <template>
-<p>Leiterteam</p>
+  <p>Leiterteam</p>
 </template>

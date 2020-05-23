@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   mode: 'universal',
   /*
@@ -51,12 +49,13 @@ export default {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     '@nuxtjs/sentry',
-    ['nuxt-matomo', { matomoUrl: '//piwik.uhlme.ch/', siteId: 16 }],
+    ['nuxt-matomo', { matomoUrl: '//piwik.uhlme.ch/', siteId: 16 }]
   ],
 
   sentry: {
-    dsn: 'https://c8be78aede154a729e2190299e2588bc@o391315.ingest.sentry.io/5237271',
-    config: {},
+    dsn:
+      'https://c8be78aede154a729e2190299e2588bc@o391315.ingest.sentry.io/5237271',
+    config: {}
   },
 
   /*
